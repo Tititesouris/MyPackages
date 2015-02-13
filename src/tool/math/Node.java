@@ -23,29 +23,14 @@ class Node {
 	}
 
 	public String toString() {
-        String str = ""+id;
-        if(outs.size() > 0) {
-            str += "-->";
-            if(outs.size() > 1) {
-                str += "(";
-            }
-            for(Edge edge : outs) {
-                //str += edge.getChild().toString();
-                if(outs.indexOf(edge) < outs.size()-1) {
-                    str += ", ";
-                }
-            }
-            if(outs.size() > 1) {
-                str += ")";
-            }
-        }
-		return str;
+		return "("+id+")";
 	}
 
-    public void join(Node node) {
+    public Edge join(Node node) {
         Edge edge = new Edge(this, node);
         addOut(edge);
         node.addIn(edge);
+        return edge;
     }
 
 	private void addIn(Edge edge) {

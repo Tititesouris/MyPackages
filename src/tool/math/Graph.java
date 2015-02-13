@@ -5,28 +5,22 @@ import java.util.HashMap;
 
 public class Graph {
 
-	private ArrayList<Node> nodes;
+    private ArrayList<Node> nodes;
+	private ArrayList<Edge> edges;
     private boolean isDirected;
     private boolean isWeighted;
 
     public Graph() {
-        this(new ArrayList<Node>(), false, false);
-    }
-
-    public Graph(ArrayList<Node> nodes) {
-        this(nodes, false, false);
+        this(false, false);
     }
 
     public Graph(boolean isDirected) {
-        this(new ArrayList<Node>(), isDirected, false);
+        this(isDirected, false);
     }
 
     public Graph(boolean isDirected, boolean isWeighted) {
-        this(new ArrayList<Node>(), isDirected, isWeighted);
-    }
-
-    public Graph(ArrayList<Node> nodes, boolean isDirected, boolean isWeighted) {
-        this.nodes = nodes;
+        this.nodes = new ArrayList<Node>();
+        this.edges = new ArrayList<Edge>();
         this.isDirected = isDirected;
         this.isWeighted = isWeighted;
     }
@@ -34,6 +28,7 @@ public class Graph {
 	public Graph copy() {
 		Graph graph = new Graph();
         graph.nodes = nodes;
+        graph.edges = edges;
         return graph;
 	}
 
@@ -44,18 +39,16 @@ public class Graph {
         }
         
         for(int i = 0; i < edges.length; i++) {
-            for(int j = 0; j < edges[i].length; j++) {
-                nodes.get(edges[i][0]).join(nodes.get(edges[i][1]));
-            }
+            this.edges.add(nodes.get(edges[i][0]).join(nodes.get(edges[i][1])));
         }
     }
 
 	public String toString() {
         String str = "{ ";
-        for(Node node : nodes) {
-            str += node.toString();
-            if(nodes.indexOf(node) < nodes.size()-1) {
-                str += ", ";
+        for(Edge edge : edges) {
+            str += edge.toString();
+            if(edges.indexOf(edge) < edges.size()-1) {
+                str += " ";
             }
         }
         return str+" }";
@@ -75,10 +68,12 @@ public class Graph {
 
     public boolean join(int a, int b) {
         if(0 <= a && a <= b && b < nodes.size()) {
-            nodes.get(a).join(nodes.get(b));
+            edges.add(nodes.get(a).join(nodes.get(b)));
             return true;
         }
         return false;
     }
+
+    
 
 }

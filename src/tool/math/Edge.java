@@ -11,7 +11,7 @@ class Edge {
 	}
 
 	public String toString() {
-		return parent.getId()+" --- "+child.getId();
+		return parent.toString()+"---"+child.toString();
 	}
 
 	public Node getParent() {
