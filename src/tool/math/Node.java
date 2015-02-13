@@ -4,26 +4,23 @@ import java.util.ArrayList;
 
 class Node {
 
-	private static int nbNodes;
-
 	private ArrayList<Edge> ins;
 	private ArrayList<Edge> outs;
-	private int id;
+	private String value;
 
 	public Node() {
 		ins = new ArrayList<Edge>();
 		outs = new ArrayList<Edge>();
-		id = nbNodes++;
+		value = "A";
 	}
 
-	public Node(ArrayList<Edge> ins, ArrayList<Edge> outs) {
+	public Node(String value) {
 		this();
-		this.ins = ins;
-		this.outs = outs;
+        this.value = value;
 	}
 
 	public String toString() {
-		return "("+id+")";
+		return "("+value+")";
 	}
 
     public Edge join(Node node) {
@@ -45,7 +42,21 @@ class Node {
         }
 	}
 
-	public int getId() { return id; }
+	public String getValue() { return value; }
+
+    public Edge popIn() {
+        if(ins.size() > 0) {
+            return ins.remove(0);
+        }
+        return null;
+    }
+
+    public Edge popOut() {
+        if(outs.size() > 0) {
+            return outs.remove(0);
+        }
+        return null;
+    }
 
     public int getInDegree() { return ins.size(); }
 

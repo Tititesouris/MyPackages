@@ -18,16 +18,20 @@ public class Graph {
     }
 
     public Graph(boolean isDirected, boolean isWeighted) {
-        this.nodes = new ArrayList<Node>();
-        this.edges = new ArrayList<Edge>();
+        this(new ArrayList<Node>(), new ArrayList<Edge>(), isDirected, isWeighted);
+    }
+
+    public Graph(ArrayList<Node> nodes, ArrayList<Edge> edges, boolean isDirected, boolean isWeighted) {
+        this.nodes = nodes;
+        this.edges = edges;
         this.isDirected = isDirected;
         this.isWeighted = isWeighted;
     }
 
 	public Graph copy() {
-		Graph graph = new Graph();
-        graph.nodes = nodes;
-        graph.edges = edges;
+        Object[] save = save();
+        Graph graph = new Graph(isDirected, isWeighted);
+        graph.load(((Integer) save[0]).intValue(), (int[][]) save[1]);
         return graph;
 	}
 
@@ -40,6 +44,20 @@ public class Graph {
         for(int i = 0; i < edges.length; i++) {
             this.edges.add(nodes.get(edges[i][0]).join(nodes.get(edges[i][1])));
         }
+    }
+
+    public Object[] save() {
+        int[][] edges = new int[this.edges.size()][2];
+        int i = 0;
+        for(Edge edge : this.edges) {
+            edges[i][0] = nodes.indexOf(edge.getParent());
+            edges[i][1] = nodes.indexOf(edge.getChild());
+            i++;
+        }
+        Object[] save = new Object[2];
+        save[0] = nodes.size();
+        save[1] = edges;
+        return save;
     }
 
 	public String toString() {
@@ -73,6 +91,42 @@ public class Graph {
         return false;
     }
 
+    public boolean hasNode() {
+        return nodes.size() > 0;
+    }
+
+    public boolean hasEdge() {
+        return edges.size() > 0;
+    }
+
+    public boolean hasEulerianPath() {
+        // If there's even the possibility of a path TODO: Check if that's actually needed
+        if(hasNode() && hasEdge()) {
+            ArrayList<Node> path = new ArrayList<Node>();
+            // Fetch all the nodes with odd degree
+            ArrayList<Node> odds = new ArrayList<Node>();
+            for (Node node : nodes) {
+                if (node.getDegree() % 2 != 0) {
+                    odds.add(node);
+                    return false;
+                }
+            }
+            Node node;
+            if (odds.size() == 2) {
+                node = odds.get(0);
+            }
+            else {
+                node = nodes.get(0);
+            }
+            while(node.getDegree() > 0) {
+                if(node.getDegree() == 0) {
+                    path.add(node);
+                }
+            }
+        }
+        return false;
+    }
+/*
     public boolean hasEulerianPath() {
         if(!isDirected) {
             int nbOdds = 0;
@@ -99,7 +153,7 @@ public class Graph {
         }
         return true;
     }
-
+*/
     public boolean hasEulerianCycle() {
         if(!isDirected) {
             for (Node node : nodes) {
