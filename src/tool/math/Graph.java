@@ -1,6 +1,9 @@
 package tool.math;
 
+import org.omg.CORBA.NO_IMPLEMENT;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Graph {
 
@@ -35,6 +38,13 @@ public class Graph {
         graph.nodes = nodes;
         return graph;
 	}
+
+    public void load(int nbNodes, HashMap<Integer, Integer> edges) {
+        this.nodes = new ArrayList<Node>(nbNodes);
+        for(int i = 0; i < edges.size(); i++) {
+            nodes.get(i).join(nodes.get(edges.get(i)));
+        }
+    }
 
 	public String toString() {
         String str = "{ ";
