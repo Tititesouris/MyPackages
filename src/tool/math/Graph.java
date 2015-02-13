@@ -1,7 +1,6 @@
 package tool.math;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Graph {
 
@@ -74,6 +73,48 @@ public class Graph {
         return false;
     }
 
-    
+    public boolean hasEulerianPath() {
+        if(!isDirected) {
+            int nbOdds = 0;
+            for (Node node : nodes) {
+                if (node.getDegree() % 2 != 0) {
+                    if (++nbOdds > 2) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+        int nbInOut = 0, nbOutIn = 0;
+        for (Node node : nodes) {
+            if (node.getInDegree() - node.getOutDegree() == 1) {
+                nbInOut++;
+            }
+            else if (node.getOutDegree() - node.getInDegree() == 1) {
+                nbOutIn++;
+            }
+            if(nbInOut > 1 || nbOutIn > 1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean hasEulerianCycle() {
+        if(!isDirected) {
+            for (Node node : nodes) {
+                if (node.getDegree() % 2 != 0) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        for (Node node : nodes) {
+            if (node.getInDegree() != node.getOutDegree()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
