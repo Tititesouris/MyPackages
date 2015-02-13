@@ -1,7 +1,5 @@
 package tool.math;
 
-import org.omg.CORBA.NO_IMPLEMENT;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -39,10 +37,16 @@ public class Graph {
         return graph;
 	}
 
-    public void load(int nbNodes, HashMap<Integer, Integer> edges) {
-        this.nodes = new ArrayList<Node>(nbNodes);
-        for(int i = 0; i < edges.size(); i++) {
-            nodes.get(i).join(nodes.get(edges.get(i)));
+    public void load(int nbNodes, int[][] edges) {
+        nodes = new ArrayList<Node>();
+        for(int i = 0; i < nbNodes; i++) {
+            add();
+        }
+        
+        for(int i = 0; i < edges.length; i++) {
+            for(int j = 0; j < edges[i].length; j++) {
+                nodes.get(edges[i][0]).join(nodes.get(edges[i][1]));
+            }
         }
     }
 
