@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 class Node {
 
+    private static int nbNodes;
+
 	private ArrayList<Edge> ins;
 	private ArrayList<Edge> outs;
 	private String value;
@@ -11,7 +13,7 @@ class Node {
 	public Node() {
 		ins = new ArrayList<Edge>();
 		outs = new ArrayList<Edge>();
-		value = "A";
+		value = ""+nbNodes++;
 	}
 
 	public Node(String value) {

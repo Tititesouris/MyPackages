@@ -98,35 +98,25 @@ public class Graph {
     public boolean hasEdge() {
         return edges.size() > 0;
     }
+/*
+    public boolean isConnected() {
+        if(hasNode()) {
+            Node node = nodes.get(0);
+        }
+    }
 
     public boolean hasEulerianPath() {
-        // If there's even the possibility of a path TODO: Check if that's actually needed
-        if(hasNode() && hasEdge()) {
-            ArrayList<Node> path = new ArrayList<Node>();
-            // Fetch all the nodes with odd degree
-            ArrayList<Node> odds = new ArrayList<Node>();
-            for (Node node : nodes) {
-                if (node.getDegree() % 2 != 0) {
-                    odds.add(node);
-                    return false;
-                }
-            }
-            Node node;
-            if (odds.size() == 2) {
-                node = odds.get(0);
-            }
-            else {
-                node = nodes.get(0);
-            }
-            while(node.getDegree() > 0) {
-                if(node.getDegree() == 0) {
-                    path.add(node);
+        if (hasNode()) { // TODO: Is that true?
+            if (isDirected) {
+                Graph graph = copy();
+                Node node = graph.nodes.get(0);
+                while(node.getOutDegree() > 0) {
+                    node.popOut();
                 }
             }
         }
-        return false;
     }
-/*
+
     public boolean hasEulerianPath() {
         if(!isDirected) {
             int nbOdds = 0;
@@ -153,7 +143,7 @@ public class Graph {
         }
         return true;
     }
-*/
+
     public boolean hasEulerianCycle() {
         if(!isDirected) {
             for (Node node : nodes) {
@@ -170,5 +160,5 @@ public class Graph {
         }
         return true;
     }
-
+*/
 }
